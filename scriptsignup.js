@@ -17,7 +17,7 @@ var utilisateurs = [
     push: "Everything",
     adresse: "rue 14 janvier",
     photo: "photo.png",
-    Notifications: ["Comments", "Candidates"],
+    notifications: ["Comments", "Candidates"],
   },
 ];
 var lastName = document.querySelector("#last-name");
@@ -29,10 +29,29 @@ var country = document.querySelector("#country");
 var streetAddress = document.querySelector("#street-address");
 var photo = document.querySelector("#file-upload");
 var btn = document.querySelector("#save");
+
 btn.addEventListener("click", save);
 
 function save(e) {
   e.preventDefault();
+
+  var notifications = document.querySelectorAll(
+    'input[type="checkbox"]:checked'
+  );
+  var tableau = [];
+  for (var element of notifications) {
+    //   console.log(element.id)
+
+    tableau.push(element.value);
+  }
+  console.log(tableau);
+
+  var radio = document.querySelector('input[type="radio"]:checked');
+
+  console.log(radio.value)
+
+
+  
   password.parentElement.classList.remove(
     "outline",
     "outline-2",
@@ -75,9 +94,15 @@ function save(e) {
     );
     passwordCorrect = false;
   } else console.log("password valid");
+var ph = ''
+  if (photo.files.length){
+    ph=photo.files[0].name;
+    
+  }
 
-  console.log(photo.value);
-
+    
+    
+    console.log(ph)
   if (mailCorrect && passwordCorrect) {
     console.log("valid");
     var user = {
@@ -87,8 +112,14 @@ function save(e) {
       about: about.value,
       country: country.value,
       adresse: streetAddress.value,
-      photo: photo.files[0].name,
+      photo: ph,
+      notifications: tableau,
+      push:radio.value
     };
+    utilisateurs.push(user)
+    console.log(user)
+    console.log(utilisateurs)
+    
   } else {
     console.log("invalid");
   }
